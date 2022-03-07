@@ -29,6 +29,9 @@ app.post("/search", async (req, res)=>{
             results.push({
                 id: {
                     videoId: item.videoId
+                },
+                snippet: {
+                    title: item.title.runs[0].text
                 }
             })
         }
