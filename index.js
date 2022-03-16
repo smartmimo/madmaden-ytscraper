@@ -92,7 +92,7 @@ app.get("/search", async (req, res)=>{
                 }
             })
         }
-        res.json(results);
+        res.json({items: results});
     } catch (error) {
         res.status(400).end(error.message);
     }
