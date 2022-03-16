@@ -63,9 +63,9 @@ app.get("/getStream", async (req, res) => {
     res.end()
 })
 
-app.post("/search", async (req, res)=>{
-    if(!req.body.query) return res.status(400).end("Missing params.");
-    const result = await axios("https://www.youtube.com/results?search_query=salam");
+app.get("/search", async (req, res)=>{
+    if(!req.query.query) return res.status(400).end("Missing params.");
+    const result = await axios("https://www.youtube.com/results?search_query="+req.query.query);
     try {
         const $ = cheerio.load(result.data);
         var el;
