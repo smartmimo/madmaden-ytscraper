@@ -11,6 +11,8 @@
   "dependencies": {
     "axios": "^0.26.0",
     "cheerio": "^1.0.0-rc.10",
-    "express": "^4.17.3"
+    "express": "^4.17.3",
+    "fluent-ffmpeg": "^2.1.2",
+    "ytdl-core": "^4.11.0"
   }
 }
