@@ -57,16 +57,10 @@ app.get("/getSong", async (req, res) => {
 app.get("/getStream", async (req, res) => {
     const url = `https://youtu.be/${req.query.id}`;
     
-    const s = await stream(url);
-    console.log(s.video)
-
-    res.set("content-type", "audio/mp3");
-    // res.set("content-length", "524288");
-    // res.set("content-type", "audio/mp3");
-    // for await (const chunk of stream(url)) {
-    //     res.write(chunk)
-    // }
-   s.pipe(res)
+    for await (const chunk of stream(url)) {
+        res.write(chunk)
+    }
+    res.end()
 })
 
 app.post("/search", async (req, res)=>{
