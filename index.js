@@ -50,7 +50,7 @@ app.get("/getSong", async (req, res) => {
         title: (song.videoDetails.media && song.videoDetails.media.song) ? song.videoDetails.media.song : song.videoDetails.title,
         artist: song.videoDetails.media ? song.videoDetails.media.artist || "" : "",
         seconds: parseInt(song.videoDetails.lengthSeconds),
-        thumbnail: song.videoDetails.thumbnail.thumbnails[0]
+        thumbnail: song.videoDetails.thumbnail.thumbnails[0].url
     })
 })
 
