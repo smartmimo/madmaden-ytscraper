@@ -88,7 +88,10 @@ app.get("/search", async (req, res)=>{
                     videoId: item.videoId
                 },
                 snippet: {
-                    title: item.title.runs[0].text
+                    title: item.title.runs[0].text,
+                    thumbnails: {
+                        "high": item.thumbnail.thumbnails.sort((a, b) => b.width - a.width)[0]
+                    }
                 }
             })
         }
