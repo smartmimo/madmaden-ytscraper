@@ -57,7 +57,7 @@ app.get("/getSong", async (req, res) => {
 app.get("/getNext", async (req, res) => {
     const url = `https://youtu.be/${req.query.id}`;
     const song = await ytdl.getInfo(url).catch(e => e)
-    res.json(song.related_videos.map(e => e.id))
+    res.json(song.related_videos ? song.related_videos.map(e => e.id) : []);
 })
 
 app.get("/getStream", async (req, res) => {
