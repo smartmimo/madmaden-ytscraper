@@ -50,9 +50,14 @@ app.get("/getSong", async (req, res) => {
         title: (song.videoDetails.media && song.videoDetails.media.song) ? song.videoDetails.media.song : song.videoDetails.title,
         artist: song.videoDetails.media ? song.videoDetails.media.artist || "" : "",
         seconds: parseInt(song.videoDetails.lengthSeconds),
-        thumbnail: song.videoDetails.thumbnail.thumbnails.pop().url,
-        related_videos: song.related_videos
+        thumbnail: song.videoDetails.thumbnail.thumbnails.pop().url
     })
+})
+
+app.get("/getNext", async (req, res) => {
+    const url = `https://youtu.be/${req.query.id}`;
+    const song = await ytdl.getInfo(url).catch(e => e)
+    res.json(song.related_videos.map(e => e.id))
 })
 
 app.get("/getStream", async (req, res) => {
