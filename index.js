@@ -50,7 +50,8 @@ app.get("/getSong", async (req, res) => {
         title: (song.videoDetails.media && song.videoDetails.media.song) ? song.videoDetails.media.song : song.videoDetails.title,
         artist: song.videoDetails.media ? song.videoDetails.media.artist || "" : "",
         seconds: parseInt(song.videoDetails.lengthSeconds),
-        thumbnail: song.videoDetails.thumbnail.thumbnails.pop().url
+        thumbnail: song.videoDetails.thumbnails.pop().url
+        // thumbnail: song.videoDetails.thumbnail.thumbnails.pop().url
     })
 })
 
@@ -63,10 +64,12 @@ app.get("/getNext", async (req, res) => {
 app.get("/getStream", async (req, res) => {
     const url = `https://youtu.be/${req.query.id}`;
     
-    for await (const chunk of stream(url)) {
-        res.write(chunk)
-    }
-    res.end()
+    // const fileStream = fs.createWriteStream("zabi.mp3", { encoding: "binary" });
+    res.type("mp3");
+    stream(url).pipe(res);
+    // fs.writeFileSync("zabi.mp3", fileStream);
+    // fileStream.pipe(res);
+    // res.end(fileStream);
 })
 
 app.get("/search", async (req, res)=>{
