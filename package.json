@@ -12,6 +12,7 @@
     "axios": "^0.26.0",
     "cheerio": "^1.0.0-rc.10",
     "express": "^4.17.3",
+    "ffmpeg-installer": "^1.0.2",
     "fluent-ffmpeg": "^2.1.2",
     "ytdl-core": "^4.11.0"
   }
