@@ -42,9 +42,12 @@ function stream(uri, opt) {
     return stream
 }
 
+app.get("/probe", (req, res) => res.end("ok"));
+
 app.get("/getSong", async (req, res) => {
     const url = `https://youtu.be/${req.query.id}`;
     const song = await ytdl.getInfo(url).catch(e => e)
+    if(!song.videoDetails) res.json({error: "Couldn't get song."}).status(403)
     res.json({
         url: song.videoDetails.videoId,
         title: (song.videoDetails.media && song.videoDetails.media.song) ? song.videoDetails.media.song : song.videoDetails.title,
@@ -58,6 +61,7 @@ app.get("/getSong", async (req, res) => {
 app.get("/getNext", async (req, res) => {
     const url = `https://youtu.be/${req.query.id}`;
     const song = await ytdl.getInfo(url).catch(e => e)
+    if(!song.related_videos) res.json({error: "Couldn't get related videos."}).status(403)
     res.json(song.related_videos ? song.related_videos.map(e => e.id) : []);
 })
 
