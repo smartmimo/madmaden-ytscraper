@@ -1,20 +1,24 @@
-FROM node:alpine AS runner
-RUN apk add ffmpeg
-RUN mkdir -p /opt/app
+FROM node:16
 
-WORKDIR /opt/app
+RUN apt-get -y update
+RUN apt-get -y upgrade
+RUN apt-get install -y ffmpeg
 
-ENV NODE_ENV production
+# Create app directory
+WORKDIR /usr/src/app
+
+# Install app dependencies
+# A wildcard is used to ensure both package.json AND package-lock.json are copied
+# where available (npm@5+)
+COPY package*.json ./
+
+# If you are building your code for production
+RUN npm ci --only=production
+
+# Bundle app source
+COPY . .
+
 ENV PORT 80
 
-RUN addgroup -g 1001 -S nodejs
-RUN adduser -S nextjs -u 1001
-
-COPY ./package.json /opt/app/package.json
-COPY ./index.js /opt/app/index.js
-COPY ./start.sh /opt/app/start.sh
-RUN chmod +x /opt/app/start.sh
-
-USER nextjs
-
-ENTRYPOINT ["/opt/app/start.sh"]
+EXPOSE 80
+CMD [ "node", "index.js", "80" ]
