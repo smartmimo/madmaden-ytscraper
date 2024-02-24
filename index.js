@@ -95,7 +95,9 @@ app.get("/search", async (req, res) => {
 
         const items = ytInitialData.contents.twoColumnSearchResultsRenderer.primaryContents.sectionListRenderer.contents[0].itemSectionRenderer.contents.filter(e => Object.keys(e).includes("videoRenderer"))
         const results = []
+        
         for (const elem of items) {
+            
             const item = elem.videoRenderer
             results.push({
                 id: {
@@ -103,7 +105,9 @@ app.get("/search", async (req, res) => {
                 },
                 snippet: {
                     title: item.title.runs[0].text,
-                    durationString: item.thumbnailOverlays.find(e => e.thumbnailOverlayTimeStatusRenderer).text.simpleText,
+                    durationString: item.lengthText?.simpleText,
+                    viewsString: item.shortViewCountText?.simpleText,
+                    publishTimeString: item.publishedTimeText?.simpleText,
                     thumbnails: {
                         "high": item.thumbnail.thumbnails.sort((a, b) => b.width - a.width)[0]
                     }
